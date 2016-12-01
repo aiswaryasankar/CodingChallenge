@@ -1,5 +1,9 @@
 alpha
+BeTa
 beta
+aetB
+Aetb
+''hello
 gamma
 delta
 beat

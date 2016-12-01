@@ -1,3 +1,7 @@
+# Aiswarya Sankar
+# Anagrams.py
+# December 1, 2016
+
 
 # This method will go through each word and convert it into a python dictionary mapping each letter to the number of times it occurs in the word
 
@@ -10,37 +14,44 @@ def createWordDict(word):
 
 	return wordDict
 
-# Go through the list of words and create a dictionary of letters corresponding to each word in the list
+# Optimized implementation
 
+# Go through the list of words and create a dictionary of letters corresponding to each word in the list
 def anagramsV2(contents):
 	wordList = contents.split()
 
 	# Dictionaries are mutable types and therefore can't be stored as keys in a dictionary
-	# However I can work around this by turning the dictionary into a tupe of pairs which is not mutable
+	# However I can work around this by turning the dictionary into a tuple of pairs which is immutable
 	# Therefore I now have a dictionary where the keys are tuple pairs of the letters and their counts and the values are the words that have this letter breakdown
+
 	masterDict = {}
 	for word in wordList:
-		wordDict = createWordDict(word)
+		wordDict = createWordDict(word.lower())
 		tupleKey = tuple(sorted(wordDict.items()))
+
 		if tupleKey not in masterDict:
 			masterDict[tupleKey] = [word]
 		else:
 			masterDict[tupleKey].append(word)
 	
+	# Continuously reads in input until the user inputs an empty string
 	while True:
-		inputWord = str(raw_input())
+		inputWord = str(raw_input()).lower()
 		if len(inputWord) == 0:
 			break
 
 		inputWordDict = createWordDict(inputWord)
 		inputWordTuple = tuple(sorted(inputWordDict.items()))
-		
+
+		# Checks if the word represented as a tuple of (character, count) pairs exists in the dictionary and returns the corresponding words
 		if (inputWordTuple in masterDict):
-			print ' '.join(masterDict[inputWordTuple])
+			masterDict[inputWordTuple].sort()
+			print (' '.join(masterDict[inputWordTuple]))
 		else:
 			print('-')
 
 
+# Naive implementation
 def anagrams(contents):
 	wordList = contents.split()
 
@@ -49,8 +60,6 @@ def anagrams(contents):
 	for word in wordList:
 		wordDict = createWordDict(word)
 		masterDict[word] = wordDict
-	#print(masterDict)
-
 
 	# Now I will read in the given word
 	# Convert that word into a dictionary
